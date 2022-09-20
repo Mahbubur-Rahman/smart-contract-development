@@ -18,7 +18,7 @@ contract FundMe {
     address[] public funders;
     //address of the owner (who deployed the contract)
     address public owner;
-    AggregatorV3Interface priceFeed;
+    AggregatorV3Interface public priceFeed;
 
     // the first person to deploy the contract is
     // the owner
@@ -88,6 +88,13 @@ contract FundMe {
         return ethAmountInUsd;
     }
 
+    function getEntranceFee() public view returns (uint256) {
+        uint256 minimumUSD = 50 * 10**18;
+        uint256 price = getPrice();
+        uint256 precision = 1 * 10**18;
+        return (minimumUSD * precision) / price;
+    }
+
     //modifier: https://medium.com/coinmonks/solidity-tutorial-all-about-modifiers-a86cf81c14cb
     modifier onlyOwner() {
         //is the message sender owner of the contract?
@@ -119,3 +126,11 @@ contract FundMe {
         funders = new address[](0);
     }
 }
+
+// https://youtu.be/M576WGiDBdQ?t=21465
+// ValueError: Gas estimation failed: 'execution reverted: VM Exception while processing transaction: revert You
+// need to spend more ETH!'. This transaction will likely revert. If you wish to broadcast, you must set the gas
+// limit manually.
+
+// Adding mainnet fork
+// https://youtu.be/M576WGiDBdQ?t=21610

@@ -17,6 +17,7 @@ def deploy_fund_me():
     # Otherwise deploy mocks
     print(f"From deploy.py. Current network is {network.show_active()}")
     # if network.show_active() != "development":
+    print(network.show_active())
     if network.show_active() not in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
         # price_feed_address = "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e"
         # The below says: Hey! if we are not in development network, poll the address from the config
